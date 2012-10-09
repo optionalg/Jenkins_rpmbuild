@@ -1,18 +1,18 @@
 Summary: Ceict server process
 Name: CMT
-Version: 1.2.0.0
+Version: 1.2.1.20120928
 Release: 1
-Source0: %{name}-%{version}.tar.gz
+Source0: %{name}-%{version}-%{release}.tar.gz
 License: Ceict
 Group: Development/Tools
-Buildroot: %{_builddir}/%{name}-root
+Buildroot: %{_builddir}/%{name}-%{version}-%{release}-root
 Requires: chkconfig initscripts dahdi-linux-complete libpri
 
 %description
 Ceict Server process
 
 %prep
-%setup -q
+%setup -n %{name}-%{version}-%{release}
 %build
 ./configure
 make
@@ -32,7 +32,7 @@ make DESTDIR=$RPM_BUILD_ROOT config
 
 %clean
 rm -rf $RPM_BUILD_ROOT
-rm -rf $RPM_BUILD_DIR/%{name}-%{version}
+rm -rf $RPM_BUILD_DIR/%{name}-%{version}-%{release}
 
 %pre
 if [ -f /etc/rc.d/init.d/ceictims ]; then
@@ -58,6 +58,3 @@ if [ "$1" == "0" ]; then
     /sbin/chkconfig --del ceictims
     service ceictims stop > /dev/null 2>&1
 fi
-
-
-
